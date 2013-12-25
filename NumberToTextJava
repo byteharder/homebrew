@@ -1,0 +1,166 @@
+package numbertext;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author byteharder
+ */
+public class NumberText {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+
+        int input;
+        
+        Scanner userIn = new Scanner(System.in);
+        System.out.print("Please Enter A Number (0 - 9999): ");
+        input = userIn.nextInt();
+        String strInput = new Integer(input).toString();
+        System.out.println("Value entered: "+ input);
+        System.out.println("Text equivalent: " + determine(strInput, strInput.length()));
+    }
+
+    private static String determine(String literal, int Length) {
+        String passMe = "";
+        switch (Length) {
+            case 1:
+                if (literal.equalsIgnoreCase("0")) {
+                    passMe = "zero";
+                } else {
+                    passMe = singles(literal, 0, 1);
+                }
+                break;
+            case 2:
+                if (literal.substring(0, 1).equalsIgnoreCase("1")) {
+                    passMe = teens(literal, 1, 2);
+                } else {
+                    passMe = numTY(literal, 0, 1).concat(singles(literal, 1, 2));
+                }
+                break;
+            case 3:
+                if (literal.substring(1, 3).equalsIgnoreCase("00")) //Whole hundreds
+                {
+                    passMe = singles(literal, 0, 1).concat("hundred");
+
+                } else if (literal.substring(1, 2).equalsIgnoreCase("1")) //Hundreds and eleven to nineteen
+                {
+                    passMe = singles(literal, 0, 1).concat("hundred ").concat(teens(literal, 2, 3));
+
+                } else if (literal.substring(1, 2).equalsIgnoreCase("0")) //Hundreds and one to nine
+                {
+                    passMe = singles(literal, 0, 1).concat("hundred ").concat(singles(literal, 2, 3));
+
+                } else {   //Hundreds and twenty to ninety nine
+
+                    passMe = singles(literal, 0, 1).concat("hundred ").concat(numTY(literal, 1, 2)).concat(singles(literal, 2, 4));
+
+                }
+                break;
+            case 4:
+                if (literal.substring(1, 4).equalsIgnoreCase("000")) //Whole Thousands
+                {
+
+                    passMe = singles(literal, 0, 1).concat("thousand");
+
+                } else if (literal.substring(2, 3).equalsIgnoreCase("1")) //Thousand and hundred and 11 -> 19
+                {
+
+                    passMe = singles(literal, 0, 1).concat("thousand ").concat(singles(literal, 1, 2)).concat("hundred ").concat(teens(literal, 3, 4));
+
+                } else if (literal.substring(1, 3).equalsIgnoreCase("00")) //Thousand and singles
+                {
+
+                    passMe = singles(literal, 0, 1).concat("thousand ").concat(singles(literal, 3, 4));
+                    //!("0").equalsIgnoreCase(literal.substring(1, 2))
+                    //passMe = singles(literal,0,1).concat("thousand ").concat(singles(literal,1,2)).concat("hundred");
+
+                } else if (literal.substring(2, 4).equalsIgnoreCase("00")) //Thousand and hundred
+                {
+                    passMe = singles(literal, 0, 1).concat("thousand ").concat(singles(literal, 1, 2)).concat("hundred");
+                } else {   //Thousand, hundred, tens, ones
+                    passMe = singles(literal, 0, 1).concat("thousand ").concat(singles(literal, 1, 2)).concat("hundred ").concat(numTY(literal, 2, 3)).concat(singles(literal, 3, 4));
+                }
+                break;
+            case 5:
+                passMe = "Number Too Big! Currently Not Supported\n Between 0 and 9999 Only";
+                break;
+        }
+        return passMe;
+    }
+
+    private static String singles(String text, int start, int end) {
+        String numText = "";
+        if (text.substring(start, end).equalsIgnoreCase("1")) {
+            numText = "one ";
+        } else if (text.substring(start, end).equalsIgnoreCase("2")) {
+            numText = "two ";
+        } else if (text.substring(start, end).equalsIgnoreCase("3")) {
+            numText = "three ";
+        } else if (text.substring(start, end).equalsIgnoreCase("4")) {
+            numText = "four ";
+        } else if (text.substring(start, end).equalsIgnoreCase("5")) {
+            numText = "five ";
+        } else if (text.substring(start, end).equalsIgnoreCase("6")) {
+            numText = "six ";
+        } else if (text.substring(start, end).equalsIgnoreCase("7")) {
+            numText = "seven ";
+        } else if (text.substring(start, end).equalsIgnoreCase("8")) {
+            numText = "eight ";
+        } else if (text.substring(start, end).equalsIgnoreCase("9")) {
+            numText = "nine ";
+        }
+        return numText;
+    }
+
+    private static String teens(String text, int start, int end) {
+        String numText = "";
+        if (text.substring(start, end).equalsIgnoreCase("0")) {
+            numText = "ten ";
+        } else if (text.substring(start, end).equalsIgnoreCase("1")) {
+            numText = "eleven ";
+        } else if (text.substring(start, end).equalsIgnoreCase("2")) {
+            numText = "twelve ";
+        } else if (text.substring(start, end).equalsIgnoreCase("3")) {
+            numText = "thirteen ";
+        } else if (text.substring(start, end).equalsIgnoreCase("4")) {
+            numText = "fourteen ";
+        } else if (text.substring(start, end).equalsIgnoreCase("5")) {
+            numText = "fifteen ";
+        } else if (text.substring(start, end).equalsIgnoreCase("6")) {
+            numText = "sixteen ";
+        } else if (text.substring(start, end).equalsIgnoreCase("7")) {
+            numText = "seventeen ";
+        } else if (text.substring(start, end).equalsIgnoreCase("8")) {
+            numText = "eighteen ";
+        } else if (text.substring(start, end).equalsIgnoreCase("9")) {
+            numText = "nineteen ";
+        }
+        return numText;
+    }
+
+    private static String numTY(String text, int start, int end) {
+        String numText = "";
+        if (text.substring(start, end).equalsIgnoreCase("2")) {
+            numText = "twenty ";
+        } else if (text.substring(start, end).equalsIgnoreCase("3")) {
+            numText = "thrity ";
+        } else if (text.substring(start, end).equalsIgnoreCase("4")) {
+            numText = "forty ";
+        } else if (text.substring(start, end).equalsIgnoreCase("5")) {
+            numText = "fifty ";
+        } else if (text.substring(start, end).equalsIgnoreCase("6")) {
+            numText = "sixty ";
+        } else if (text.substring(start, end).equalsIgnoreCase("7")) {
+            numText = "seventy ";
+        } else if (text.substring(start, end).equalsIgnoreCase("8")) {
+            numText = "eighty ";
+        } else if (text.substring(start, end).equalsIgnoreCase("9")) {
+            numText = "ninety ";
+        }
+        return numText;
+    }
+}
