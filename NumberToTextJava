@@ -7,20 +7,32 @@ import java.util.Scanner;
  */
 public class NumberText {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-
         int input;
-        
-        Scanner userIn = new Scanner(System.in);
-        System.out.print("Please Enter A Number (0 - 9999): ");
-        input = userIn.nextInt();
-        String strInput = new Integer(input).toString();
-        System.out.println("Value entered: "+ input);
-        System.out.println("Text equivalent: " + determine(strInput, strInput.length()));
+		boolean initMe = true;
+
+		Scanner userIn = new Scanner(System.in);
+		String use = "Y";
+		while (initMe) {
+			if (use.equalsIgnoreCase("Y")) {
+				System.out.print("Please Enter A Number (0 - 9999): ");
+				input = userIn.nextInt();
+				String strInput = new Integer(input).toString();
+				System.out.println("Value entered: " + input);
+				System.out.println("Text equivalent: "
+						+ determine(strInput, strInput.length()));
+				System.out.println("Repeat? Y/N ");
+				use = userIn .next();
+
+			} else if (use.equalsIgnoreCase("N")) {
+				initMe = false;
+				System.out.println("GOODBYE ;-)");
+			} else {
+				System.out
+						.println("Please enter valid input.\nY = Yes and N = No");
+				use = userIn .next();
+			}
+		}
     }
 
     private static String determine(String literal, int Length) {
